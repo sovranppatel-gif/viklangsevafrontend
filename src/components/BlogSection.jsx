@@ -5,6 +5,7 @@ import { useLanguage } from '../context/LanguageContext'
 import { DEFAULT_BLOG } from '../data/blogDefaults'
 import { fetchBlogArticles, fetchBlogContent } from '../services/cms'
 import { formatDate } from '../utils/format'
+import { mediaUrl } from '../utils/media'
 import EmptyState from './ui/EmptyState'
 import ErrorState from './ui/ErrorState'
 import LoadingState from './ui/LoadingState'
@@ -81,7 +82,7 @@ export default function BlogSection() {
               >
                 <div className="overflow-hidden">
                   <img
-                    src={post.image}
+                    src={mediaUrl(post.image)}
                     alt={pick(post.title, post.titleHi)}
                     className="h-44 w-full object-cover transition duration-500 group-hover:scale-105 sm:h-52"
                     loading="lazy"

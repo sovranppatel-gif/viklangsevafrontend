@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { useLanguage } from '../context/LanguageContext'
 import { DEFAULT_GALLERY } from '../data/galleryDefaults'
 import { fetchGalleryCatalogCms, fetchGalleryContent } from '../services/cms'
+import { mediaUrl } from '../utils/media'
 import EmptyState from './ui/EmptyState'
 import ErrorState from './ui/ErrorState'
 import LoadingState from './ui/LoadingState'
@@ -90,7 +91,7 @@ export default function Gallery({ showHeader = true, limit }) {
                 }`}
               >
                 <img
-                  src={item.image}
+                  src={mediaUrl(item.image)}
                   alt={pick(item.title, item.titleHi)}
                   className={`w-full object-cover transition duration-500 group-hover:scale-110 ${
                     index === 0 ? 'h-48 sm:h-64 md:h-full' : 'h-36 sm:h-44 md:h-56'

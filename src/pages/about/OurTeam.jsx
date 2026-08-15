@@ -3,6 +3,7 @@ import PageHero from '../../components/ui/PageHero'
 import { useLanguage } from '../../context/LanguageContext'
 import { DEFAULT_ABOUT } from '../../data/aboutDefaults'
 import { fetchAboutContent } from '../../services/cms'
+import { mediaUrl } from '../../utils/media'
 
 export default function OurTeam() {
   const { isHi } = useLanguage()
@@ -56,7 +57,7 @@ export default function OurTeam() {
             >
               {member.image ? (
                 <img
-                  src={member.image}
+                  src={mediaUrl(member.image)}
                   alt={pick(member.name, member.nameHi)}
                   className="h-56 w-full object-cover"
                   loading="lazy"

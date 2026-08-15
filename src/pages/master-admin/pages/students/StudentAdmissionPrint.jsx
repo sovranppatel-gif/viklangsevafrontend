@@ -1,5 +1,6 @@
 import { RECEIPT_80G } from '../../../../data/receipt80g'
 import { formatStudentDate } from '../../../../utils/student'
+import { mediaUrl } from '../../../../utils/media'
 
 function Cell({ label, value, span = 1 }) {
   return (
@@ -29,7 +30,7 @@ export default function StudentAdmissionPrint({ student }) {
           <p className="sas-title">प्रवेश हेतु आवेदन-पत्र</p>
         </div>
         {student.photoUrl ? (
-          <img src={student.photoUrl} alt="" className="sas-photo" />
+          <img src={mediaUrl(student.photoUrl)} alt="" className="sas-photo" />
         ) : (
           <div className="sas-photo sas-photo-empty">फोटो</div>
         )}

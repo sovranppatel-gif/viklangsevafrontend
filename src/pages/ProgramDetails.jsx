@@ -6,6 +6,7 @@ import LoadingState from '../components/ui/LoadingState'
 import PageHero from '../components/ui/PageHero'
 import { useLanguage } from '../context/LanguageContext'
 import { fetchProgramBySlugCms } from '../services/cms'
+import { mediaUrl } from '../utils/media'
 
 export default function ProgramDetails() {
   const { slug } = useParams()
@@ -84,7 +85,7 @@ export default function ProgramDetails() {
       <section className="section-padding">
         <div className="container-page grid gap-10 lg:grid-cols-2">
           <img
-            src={data.image}
+            src={mediaUrl(data.image)}
             alt={pick(data.title, data.titleHi)}
             className="h-80 w-full rounded-3xl object-cover shadow-lg"
             loading="lazy"

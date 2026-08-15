@@ -7,6 +7,7 @@ import PageHero from '../../components/ui/PageHero'
 import { useLanguage } from '../../context/LanguageContext'
 import { fetchBlogBySlugCms } from '../../services/cms'
 import { formatDate } from '../../utils/format'
+import { mediaUrl } from '../../utils/media'
 
 export default function BlogDetails() {
   const { slug } = useParams()
@@ -85,7 +86,7 @@ export default function BlogDetails() {
             {formatDate(data.date)}
           </time>
           <img
-            src={data.image}
+            src={mediaUrl(data.image)}
             alt={pick(data.title, data.titleHi)}
             className="mt-6 h-80 w-full rounded-3xl object-cover"
             loading="lazy"

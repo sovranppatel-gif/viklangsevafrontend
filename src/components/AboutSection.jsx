@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { useLanguage } from '../context/LanguageContext'
 import { DEFAULT_ABOUT } from '../data/aboutDefaults'
 import { fetchAboutContent } from '../services/cms'
+import { mediaUrl } from '../utils/media'
 
 export default function AboutSection() {
   const { t, isHi } = useLanguage()
@@ -52,7 +53,7 @@ export default function AboutSection() {
         >
           <div className="overflow-hidden rounded-3xl shadow-xl">
             <img
-              src={content.imageUrl}
+              src={mediaUrl(content.imageUrl)}
               alt={pick(content.imageAlt, content.imageAltHi)}
               className="h-full w-full object-cover"
               loading="lazy"

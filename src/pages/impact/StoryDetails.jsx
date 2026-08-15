@@ -7,6 +7,7 @@ import PageHero from '../../components/ui/PageHero'
 import { useLanguage } from '../../context/LanguageContext'
 import { fetchStoryBySlugCms } from '../../services/cms'
 import { formatDate } from '../../utils/format'
+import { mediaUrl } from '../../utils/media'
 
 export default function StoryDetails() {
   const { slug } = useParams()
@@ -81,7 +82,7 @@ export default function StoryDetails() {
         <div className="container-page max-w-3xl">
           <p className="text-sm text-text-muted">{formatDate(data.date)}</p>
           <img
-            src={data.image}
+            src={mediaUrl(data.image)}
             alt={title}
             className="mt-6 h-80 w-full rounded-3xl object-cover"
             loading="lazy"

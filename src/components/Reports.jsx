@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { useLanguage } from '../context/LanguageContext'
 import { DEFAULT_REPORTS } from '../data/reportsDefaults'
 import { fetchReportItemsCms, fetchReportsContent } from '../services/cms'
+import { mediaUrl } from '../utils/media'
 import EmptyState from './ui/EmptyState'
 import ErrorState from './ui/ErrorState'
 import LoadingState from './ui/LoadingState'
@@ -64,7 +65,7 @@ export default function Reports({ showViewAll = true }) {
           <div className="flex flex-wrap justify-center gap-4">
             {data.map((doc) => {
               const hasFile = Boolean(doc.fileUrl) && !doc.placeholder && doc.fileUrl !== '#'
-              const href = hasFile ? doc.fileUrl : section.viewAllLink || '/reports'
+              const href = hasFile ? mediaUrl(doc.fileUrl) : section.viewAllLink || '/reports'
               return (
                 <article
                   key={doc.id}

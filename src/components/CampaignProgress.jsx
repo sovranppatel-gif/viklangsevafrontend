@@ -7,6 +7,7 @@ import { DEFAULT_IMPACT } from '../data/impactDefaults'
 import { useCountUp } from '../hooks/useCountUp'
 import { fetchImpactCampaignCms } from '../services/cms'
 import { formatCurrencyINR } from '../utils/format'
+import { mediaUrl } from '../utils/media'
 
 export default function CampaignProgress() {
   const { t, isHi } = useLanguage()
@@ -106,7 +107,7 @@ export default function CampaignProgress() {
 
             <div className="relative min-h-[180px] bg-navy sm:min-h-[220px] lg:min-h-full">
               <img
-                src={campaign.image}
+                src={mediaUrl(campaign.image)}
                 alt=""
                 className="absolute inset-0 h-full w-full object-cover opacity-50"
                 aria-hidden="true"

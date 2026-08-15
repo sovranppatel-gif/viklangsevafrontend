@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { useLanguage } from '../context/LanguageContext'
 import { DEFAULT_IMPACT } from '../data/impactDefaults'
 import { fetchImpactContent, fetchImpactStoriesCms } from '../services/cms'
+import { mediaUrl } from '../utils/media'
 import EmptyState from './ui/EmptyState'
 import ErrorState from './ui/ErrorState'
 import LoadingState from './ui/LoadingState'
@@ -83,7 +84,7 @@ export default function ImpactStories({ hideHeader = false, limit } = {}) {
               >
                 <div className="overflow-hidden">
                   <img
-                    src={story.image}
+                    src={mediaUrl(story.image)}
                     alt={pick(story.title, story.titleHi)}
                     className="h-48 w-full object-cover transition duration-500 group-hover:scale-105 sm:h-56"
                     loading="lazy"

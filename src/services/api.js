@@ -9,15 +9,28 @@ import { stories } from '../data/stories'
 
 const USE_API = import.meta.env.VITE_USE_API === 'true'
 
+function normalizeApiBase(raw) {
+  const base = String(raw || '/api')
+    .trim()
+    .replace(/\/$/, '')
+
+  if (!base || base === '/api' || base.endsWith('/api')) {
+    return base || '/api'
+  }
+
+  return `${base}/api`
+}
+
 function resolveApiBase() {
-  const envBase = import.meta.env.VITE_API_BASE_URL || '/api'
+  const envBase = normalizeApiBase(import.meta.env.VITE_API_BASE_URL || '/api')
   if (typeof window === 'undefined') return envBase
+
+  // Absolute API URL (Vercel) should be used on localhost and LAN.
+  // Relative /api is only for the Vite proxy against a local backend.
+  if (envBase.startsWith('http')) return envBase
 
   const hostname = window.location.hostname
   const isLanHost = hostname !== 'localhost' && hostname !== '127.0.0.1'
-
-  // Phone / another PC on Wi-Fi must hit this machine via the Vite proxy,
-  // not the other device's own localhost.
   if (isLanHost) return '/api'
 
   return envBase

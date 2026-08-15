@@ -2,6 +2,7 @@ import { ArrowRight, CalendarDays, Clock, MapPin } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { formatDate, formatDayMonth } from '../../utils/format'
+import { mediaUrl } from '../../utils/media'
 
 export default function EventCard({
   event,
@@ -29,7 +30,7 @@ export default function EventCard({
       <div className="relative aspect-[16/10] overflow-hidden bg-muted">
         {event.image ? (
           <img
-            src={event.image}
+            src={mediaUrl(event.image)}
             alt=""
             className={`h-full w-full object-cover transition duration-500 group-hover:scale-[1.03] ${
               isPast ? 'saturate-75' : ''

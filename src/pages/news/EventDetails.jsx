@@ -9,6 +9,7 @@ import { useLanguage } from '../../context/LanguageContext'
 import { fetchEventBySlugCms } from '../../services/cms'
 import { isPastEvent, isUpcomingEvent } from '../../utils/events'
 import { formatDate } from '../../utils/format'
+import { mediaUrl } from '../../utils/media'
 
 export default function EventDetails() {
   const { slug } = useParams()
@@ -89,7 +90,7 @@ export default function EventDetails() {
       <section className="section-padding">
         <div className="container-page grid gap-8 lg:grid-cols-2">
           <img
-            src={data.image}
+            src={mediaUrl(data.image)}
             alt={pick(data.title, data.titleHi)}
             className="h-80 w-full rounded-3xl object-cover"
             loading="lazy"

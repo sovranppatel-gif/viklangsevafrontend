@@ -12,6 +12,7 @@ import {
   printStudentAdmission,
   studentInitials,
 } from '../../../utils/student'
+import { mediaUrl } from '../../../utils/media'
 
 const STATUS_FILTERS = [{ value: 'all', label: 'All', labelHi: 'सभी' }, ...STUDENT_STATUSES]
 
@@ -240,7 +241,7 @@ export default function StudentsPage() {
                       <div className="flex items-center gap-3">
                         <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-navy text-xs font-bold text-white">
                           {item.photoUrl ? (
-                            <img src={item.photoUrl} alt="" className="h-full w-full object-cover" />
+                            <img src={mediaUrl(item.photoUrl)} alt="" className="h-full w-full object-cover" />
                           ) : (
                             studentInitials(item.name)
                           )}

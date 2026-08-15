@@ -4,13 +4,14 @@ import {
   formatVolunteerDate,
   volunteerInitials,
 } from '../../../../utils/volunteer'
+import { mediaUrl } from '../../../../utils/media'
 
 export default function VolunteerIdCard({ volunteer }) {
   if (!volunteer) return null
 
   const address = formatVolunteerAddress(volunteer) || RECEIPT_80G.address
   const validUntil = formatVolunteerDate(volunteer.validUntil)
-  const photo = volunteer.photoUrl
+  const photo = mediaUrl(volunteer.photoUrl)
 
   return (
     <div className="space-y-5">

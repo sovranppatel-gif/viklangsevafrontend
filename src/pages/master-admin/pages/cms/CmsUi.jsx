@@ -1,5 +1,6 @@
 import { CheckCircle2, Link2, Loader2, Upload, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
+import { mediaUrl } from '../../../../utils/media'
 
 export const cmsInputClass =
   'w-full rounded-xl border border-border bg-white px-3 py-2.5 text-sm text-text outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/15'
@@ -54,7 +55,7 @@ export function ImageSourcePicker({
   uploading = false,
   label = 'Image',
 }) {
-  const [mode, setMode] = useState(String(value || '').startsWith('/uploads/') ? 'upload' : 'url')
+  const [mode, setMode] = useState(String(value || '').includes('/uploads/') ? 'upload' : 'url')
   const fileRef = useRef(null)
 
   async function handleFile(e) {
@@ -131,7 +132,7 @@ export function ImageSourcePicker({
 
       {value ? (
         <div className="overflow-hidden rounded-xl border border-border bg-muted">
-          <img src={value} alt="Preview" className="h-36 w-full object-cover" />
+          <img src={mediaUrl(value)} alt="Preview" className="h-36 w-full object-cover" />
         </div>
       ) : null}
     </div>

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { useLanguage } from '../context/LanguageContext'
 import { DEFAULT_HERO_CONTENT } from '../data/heroDefaults'
 import { fetchHeroContent } from '../services/cms'
+import { mediaUrl } from '../utils/media'
 import { TrustStrip } from './donation/DonationWidgets'
 
 export default function Hero() {
@@ -30,7 +31,7 @@ export default function Hero() {
       className="relative isolate min-h-[min(100svh,720px)] overflow-hidden sm:min-h-[620px] md:min-h-[720px]"
     >
       <img
-        src={content.imageUrl}
+        src={mediaUrl(content.imageUrl)}
         alt={pick(content.imageAlt, content.imageAltHi)}
         className="absolute inset-0 h-full w-full object-cover object-[center_30%]"
       />

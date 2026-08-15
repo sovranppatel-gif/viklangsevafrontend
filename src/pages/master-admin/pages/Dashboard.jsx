@@ -16,6 +16,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getMasterAdminToken, getMasterAdminUser } from '../data/auth'
 import { fetchDashboard } from '../../../services/dashboard'
+import { mediaUrl } from '../../../utils/media'
 
 const iconMap = {
   handHeart: HandHeart,
@@ -339,7 +340,7 @@ function RecentBlogs({ recentBlogs }) {
             <li key={b.id} className="flex gap-3 rounded-xl bg-[#F8FAFC] px-3 py-2.5">
               {b.image ? (
                 <img
-                  src={b.image}
+                  src={mediaUrl(b.image)}
                   alt=""
                   className="h-14 w-16 shrink-0 rounded-lg object-cover"
                 />

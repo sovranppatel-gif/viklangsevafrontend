@@ -16,6 +16,7 @@ import {
   updateHeroContent,
   uploadHeroImage,
 } from '../../../../services/cms'
+import { mediaUrl } from '../../../../utils/media'
 
 const emptyForm = {
   imageUrl: '',
@@ -53,7 +54,7 @@ const inputClass =
 const textareaClass = `${inputClass} min-h-[88px] resize-y`
 
 function isLocalUpload(url = '') {
-  return String(url).startsWith('/uploads/')
+  return String(url).includes('/uploads/')
 }
 
 export default function HeroCmsPage() {
@@ -357,7 +358,7 @@ export default function HeroCmsPage() {
             <div className="overflow-hidden rounded-xl border border-border bg-muted">
               {form.imageUrl ? (
                 <img
-                  src={form.imageUrl}
+                  src={mediaUrl(form.imageUrl)}
                   alt="Hero preview"
                   className="h-40 w-full object-cover lg:h-full lg:min-h-[160px]"
                 />

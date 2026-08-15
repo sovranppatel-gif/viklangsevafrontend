@@ -13,6 +13,7 @@ import { DEFAULT_BLOG } from '../../data/blogDefaults'
 import { fetchBlogContent, fetchEventItemsCms } from '../../services/cms'
 import { splitEventsByTiming } from '../../utils/events'
 import { formatDate, formatDayMonth } from '../../utils/format'
+import { mediaUrl } from '../../utils/media'
 
 export default function EventsPage() {
   const { isHi, t } = useLanguage()
@@ -172,7 +173,7 @@ export default function EventsPage() {
                     <div className="relative min-h-[240px] overflow-hidden bg-muted sm:min-h-[320px]">
                       {featured.image ? (
                         <img
-                          src={featured.image}
+                          src={mediaUrl(featured.image)}
                           alt=""
                           className="absolute inset-0 h-full w-full object-cover"
                         />
