@@ -1,0 +1,575 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+
+  --color-navy: #0b1d36;
+  --color-navy-light: #132a4a;
+  --color-navy-soft: #1a3a5c;
+  --color-brand: #e30613;
+  --color-brand-dark: #b80510;
+  --color-brand-soft: #ffe5e7;
+  --color-accent-green: #1b8a5a;
+  --color-accent-yellow: #f5b400;
+  --color-surface: #ffffff;
+  --color-muted: #f5f7fa;
+  --color-border: #e6ebf2;
+  --color-text: #1a2332;
+  --color-text-muted: #5b677a;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply overflow-x-clip bg-surface font-sans text-text antialiased;
+    font-size: calc(1rem * var(--text-scale, 1));
+  }
+
+  img,
+  video,
+  iframe {
+    max-width: 100%;
+  }
+
+  input,
+  textarea,
+  select {
+    font-size: max(16px, 1em);
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand;
+  }
+
+  .high-contrast body,
+  html.high-contrast body {
+    @apply bg-white text-black;
+  }
+
+  html.high-contrast .bg-navy,
+  html.high-contrast .bg-navy-light {
+    background-color: #000 !important;
+  }
+
+  html.high-contrast .text-text-muted {
+    color: #222 !important;
+  }
+
+  html.high-contrast a,
+  html.high-contrast button {
+    text-decoration-thickness: 2px;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-padding {
+    @apply py-12 sm:py-16 md:py-20 lg:py-24;
+  }
+
+  .section-label {
+    @apply text-[10px] font-semibold tracking-[0.16em] text-brand uppercase sm:text-xs sm:tracking-[0.18em];
+  }
+
+  .section-title {
+    @apply mt-2 text-[1.65rem] font-bold leading-tight tracking-tight text-navy sm:mt-3 sm:text-3xl md:text-4xl lg:text-[2.75rem];
+  }
+
+  .section-desc {
+    @apply mt-3 max-w-2xl text-sm leading-relaxed text-text-muted sm:mt-4 sm:text-base md:text-lg;
+  }
+
+  .btn-primary {
+    @apply inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-brand px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-dark focus-visible:outline-brand sm:w-auto sm:px-6;
+  }
+
+  .btn-secondary {
+    @apply inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border-2 border-white bg-transparent px-5 py-3 text-sm font-semibold text-white transition hover:bg-white hover:text-navy sm:w-auto sm:px-6;
+  }
+
+  .btn-outline {
+    @apply inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border-2 border-brand px-5 py-3 text-sm font-semibold text-brand transition hover:bg-brand hover:text-white sm:w-auto sm:px-6;
+  }
+
+  .card {
+    @apply rounded-2xl border border-border bg-white p-4 shadow-[0_8px_30px_rgba(11,29,54,0.06)] transition duration-300 sm:p-6;
+  }
+
+  .safe-bottom {
+    padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+  }
+
+  .page-with-sticky-cta {
+    padding-bottom: calc(4.5rem + env(safe-area-inset-bottom));
+  }
+
+  .card-hover {
+    @apply hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(11,29,54,0.12)];
+  }
+
+  .link-arrow {
+    @apply inline-flex items-center gap-1 text-sm font-semibold text-brand transition hover:gap-2;
+  }
+
+  .sidebar-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.22) transparent;
+  }
+
+  .sidebar-scroll::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .sidebar-scroll::-webkit-scrollbar-track {
+    background: transparent;
+    margin-block: 8px;
+  }
+
+  .sidebar-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.22);
+    border-radius: 999px;
+  }
+
+  .sidebar-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.38);
+  }
+}
+
+@media print {
+  @page {
+    size: A5 portrait;
+    margin: 10mm;
+  }
+
+  @page student-admission {
+    size: A4 portrait;
+    margin: 10mm;
+  }
+
+  @page donation-receipt {
+    size: A4 portrait;
+    margin: 8mm;
+  }
+
+  body * {
+    visibility: hidden !important;
+  }
+
+  #donation-receipt-print-root,
+  #donation-receipt-print-root *,
+  #volunteer-idcard-print-root,
+  #volunteer-idcard-print-root *,
+  #student-admission-print-root,
+  #student-admission-print-root *,
+  .print-root,
+  .print-root * {
+    visibility: visible !important;
+  }
+
+  #volunteer-idcard-print-root,
+  .print-root:not(#student-admission-print-root):not(#donation-receipt-print-root) {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    background: white !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  #student-admission-print-root {
+    page: student-admission;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: auto !important;
+    bottom: auto !important;
+    inset: auto !important;
+    width: 190mm !important;
+    max-width: 190mm !important;
+    height: auto !important;
+    overflow: visible !important;
+    background: white !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+
+  #donation-receipt-print-root {
+    page: donation-receipt;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: auto !important;
+    bottom: auto !important;
+    inset: auto !important;
+    width: 194mm !important;
+    max-width: 194mm !important;
+    height: auto !important;
+    overflow: visible !important;
+    background: white !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* A4 admission form — screen preview + print */
+.student-admission-sheet {
+  box-sizing: border-box;
+  width: 210mm;
+  max-width: 100%;
+  min-height: 0;
+  margin: 0 auto;
+  padding: 6mm 7mm;
+  color: #000;
+  background: #fff;
+  border: 1.5px solid #000;
+  font-family: "Noto Sans Devanagari", "Poppins", ui-sans-serif, sans-serif;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.sas-header {
+  display: grid;
+  grid-template-columns: 28mm 1fr 28mm;
+  gap: 3mm;
+  align-items: center;
+  padding-bottom: 2mm;
+  border-bottom: 1.2px solid #000;
+}
+
+.sas-logo {
+  width: 27mm;
+  height: 27mm;
+  object-fit: contain;
+}
+
+.sas-heading {
+  text-align: center;
+}
+
+.sas-org-run {
+  margin: 0;
+  font-size: 8px;
+  line-height: 1.25;
+}
+
+.sas-org-name {
+  margin: 0.8mm 0 0;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.sas-target {
+  margin: 0.6mm 0 0;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.sas-title {
+  margin: 1mm 0 0;
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: underline;
+}
+
+.sas-photo {
+  width: 28mm;
+  height: 34mm;
+  object-fit: cover;
+  border: 1px solid #000;
+  border-radius: 1mm;
+}
+
+.sas-photo-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.sas-table {
+  width: 100%;
+  margin-top: 2mm;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.sas-cell {
+  width: 50%;
+  padding: 1.3mm 2mm;
+  border: 0.55px solid #111;
+  vertical-align: middle;
+}
+
+.sas-cell-block {
+  height: auto;
+}
+
+.sas-label {
+  display: inline;
+  margin-right: 1.5mm;
+  font-size: 9.5px;
+  font-weight: 700;
+}
+
+.sas-value {
+  display: inline;
+  font-size: 11px;
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.sas-block {
+  display: inline;
+  min-height: 0;
+  max-height: none;
+  overflow: visible;
+  font-weight: 500;
+  white-space: normal;
+}
+
+.sas-declaration {
+  margin-top: 2.5mm;
+  padding-top: 2mm;
+  border-top: 1.2px solid #000;
+}
+
+.sas-declaration h2 {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 800;
+  text-align: center;
+  text-decoration: underline;
+}
+
+.sas-declaration p {
+  margin: 1.8mm 0 0;
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.sas-sign-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8mm;
+  margin-top: 4mm;
+}
+
+.sas-sign {
+  min-width: 48mm;
+  text-align: center;
+  font-size: 10px;
+}
+
+.sas-sign-line {
+  display: block;
+  min-height: 5mm;
+  margin-bottom: 0.8mm;
+  border-bottom: 1px dotted #333;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+@media print {
+  .student-admission-sheet {
+    width: 190mm;
+    max-width: 190mm;
+    max-height: 277mm;
+    overflow: hidden;
+    padding: 3.5mm 4.5mm 4mm;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+/* Half-A4 donation receipt (top half of A4, cut along the line) */
+.donation-receipt-sheet {
+  box-sizing: border-box;
+  width: 210mm;
+  max-width: 100%;
+  height: 148mm;
+  margin: 0 auto;
+  color: #000;
+  background: #fff;
+  font-family: "Noto Sans Devanagari", "Poppins", ui-sans-serif, sans-serif;
+}
+
+.dr-inner {
+  box-sizing: border-box;
+  height: 140mm;
+  padding: 4mm 5mm 3mm;
+  border: 1.6px solid #000;
+  overflow: hidden;
+}
+
+.dr-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 4mm;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.dr-header {
+  display: grid;
+  grid-template-columns: 22mm 1fr;
+  gap: 3mm;
+  align-items: center;
+  margin-top: 2mm;
+  padding-bottom: 2mm;
+  border-bottom: 1.2px solid #000;
+}
+
+.dr-logo {
+  width: 20mm;
+  height: 20mm;
+  object-fit: contain;
+}
+
+.dr-heading {
+  text-align: center;
+}
+
+.dr-motto {
+  margin: 0;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+}
+
+.dr-heading h1 {
+  margin: 0.6mm 0 0;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.dr-run {
+  margin: 0.4mm 0 0;
+  font-size: 8px;
+  line-height: 1.25;
+}
+
+.dr-title {
+  margin: 1.2mm 0 0;
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: underline;
+}
+
+.dr-serial {
+  display: flex;
+  justify-content: space-between;
+  gap: 4mm;
+  margin-top: 2.5mm;
+  font-size: 11px;
+}
+
+.dr-body {
+  margin-top: 2.5mm;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.dr-body p {
+  margin: 0 0 1.6mm;
+}
+
+.dr-two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3mm;
+}
+
+.dr-contact {
+  font-size: 9px;
+  color: #222;
+}
+
+.dr-boxes {
+  display: grid;
+  grid-template-columns: 38mm 1fr;
+  gap: 3.5mm;
+  align-items: stretch;
+  margin-top: 2mm;
+}
+
+.dr-amount-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5mm;
+  border: 1.6px solid #000;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.dr-80g {
+  padding: 2mm 2.5mm;
+  border: 0.7px solid #000;
+  font-size: 8.5px;
+  line-height: 1.35;
+}
+
+.dr-80g p {
+  margin: 0.4mm 0 0;
+}
+
+.dr-80g-title {
+  margin: 0 !important;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.dr-footer {
+  margin: 2mm 0 0;
+  font-size: 8px;
+  line-height: 1.3;
+}
+
+.dr-signs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10mm;
+  margin-top: 6mm;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.dr-sign-line {
+  display: block;
+  height: 8mm;
+  margin-bottom: 1mm;
+  border-bottom: 1px dotted #333;
+}
+
+@media print {
+  .donation-receipt-sheet {
+    width: 194mm;
+    max-width: 194mm;
+    height: 140mm;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .dr-inner {
+    height: 132mm;
+  }
+}
