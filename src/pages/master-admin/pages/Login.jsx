@@ -70,7 +70,7 @@ export default function MasterAdminLogin() {
       const message =
         err?.response?.data?.message ||
         (err?.code === 'ERR_NETWORK'
-          ? 'Cannot reach server. Make sure the API is running on port 5000.'
+          ? 'Cannot reach server. Check VITE_API_BASE_URL in .env and restart the frontend.'
           : 'Invalid email or password.')
       setError(message)
     } finally {

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { API_BASE_URL, USE_API } from '../config/env'
 import { blogs } from '../data/blogs'
 import { events } from '../data/events'
 import { galleryItems, galleryVideos } from '../data/gallery'
@@ -7,39 +8,10 @@ import { programs } from '../data/programs'
 import { reports } from '../data/reports'
 import { stories } from '../data/stories'
 
-const USE_API = import.meta.env.VITE_USE_API === 'true'
-
-function normalizeApiBase(raw) {
-  const base = String(raw || '/api')
-    .trim()
-    .replace(/\/$/, '')
-
-  if (!base || base === '/api' || base.endsWith('/api')) {
-    return base || '/api'
-  }
-
-  return `${base}/api`
-}
-
-function resolveApiBase() {
-  const envBase = normalizeApiBase(import.meta.env.VITE_API_BASE_URL || '/api')
-  if (typeof window === 'undefined') return envBase
-
-  // Absolute API URL (Vercel) should be used on localhost and LAN.
-  // Relative /api is only for the Vite proxy against a local backend.
-  if (envBase.startsWith('http')) return envBase
-
-  const hostname = window.location.hostname
-  const isLanHost = hostname !== 'localhost' && hostname !== '127.0.0.1'
-  if (isLanHost) return '/api'
-
-  return envBase
-}
-
-const API_BASE = resolveApiBase()
+export { API_BASE_URL, API_ORIGIN, USE_API } from '../config/env'
 
 export const api = axios.create({
-  baseURL: API_BASE,
+  baseURL: API_BASE_URL,
   timeout: 30000,
 })
 

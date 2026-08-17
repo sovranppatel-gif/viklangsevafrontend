@@ -1,11 +1,4 @@
-function apiOrigin() {
-  const raw = String(import.meta.env.VITE_API_BASE_URL || '')
-    .trim()
-    .replace(/\/$/, '')
-
-  if (!raw || raw === '/api') return ''
-  return raw.replace(/\/api$/, '')
-}
+import { API_ORIGIN } from '../config/env'
 
 export function mediaUrl(url) {
   if (!url) return ''
@@ -16,8 +9,7 @@ export function mediaUrl(url) {
   }
 
   if (value.startsWith('/uploads/')) {
-    const origin = apiOrigin()
-    return origin ? `${origin}${value}` : value
+    return API_ORIGIN ? `${API_ORIGIN}${value}` : value
   }
 
   return value
