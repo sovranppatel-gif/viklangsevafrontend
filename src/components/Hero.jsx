@@ -81,7 +81,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="mt-6 flex w-full flex-col gap-3 sm:mt-8 sm:flex-row sm:items-center"
+            className="mt-6 flex w-full min-w-0 flex-col gap-3 sm:mt-8 sm:flex-row sm:items-center"
           >
             <Link to={content.primaryCtaLink || '/donate'} className="btn-primary sm:px-8 sm:text-base">
               {t(content.primaryCtaLabel, content.primaryCtaLabelHi)}
@@ -98,7 +98,7 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="mt-6 text-white/90 sm:mt-8"
+            className="mt-6 min-w-0 text-white/90 sm:mt-8"
           >
             <TrustStrip className="text-[11px] text-white/90 sm:text-sm [&_svg]:text-accent-yellow" />
           </motion.div>

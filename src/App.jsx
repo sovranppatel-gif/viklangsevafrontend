@@ -1,4 +1,6 @@
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { useCallback, useState } from 'react'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import SplashScreen from './components/SplashScreen'
 import MainLayout from './components/layout/MainLayout'
 import About from './pages/About'
 import OurJourney from './pages/about/OurJourney'
@@ -49,13 +51,21 @@ import VolunteerFormPage from './pages/master-admin/pages/VolunteerFormPage'
 import StudentsPage from './pages/master-admin/pages/StudentsPage'
 import StudentFormPage from './pages/master-admin/pages/StudentFormPage'
 import ContactSettingsPage from './pages/master-admin/pages/ContactSettingsPage'
+import DonateSettingsPage from './pages/master-admin/pages/DonateSettingsPage'
 import AllDonorsPage from './pages/master-admin/pages/AllDonorsPage'
 import CreateDonorPage from './pages/master-admin/pages/CreateDonorPage'
 import MasterAdminLogin from './pages/master-admin/pages/Login'
 
 export default function App() {
+  const { pathname } = useLocation()
+  const isAdmin = pathname.startsWith('/master-admin')
+  const [showSplash, setShowSplash] = useState(() => !window.location.pathname.startsWith('/master-admin'))
+  const finishSplash = useCallback(() => setShowSplash(false), [])
+
   return (
-    <Routes>
+    <>
+      {showSplash && !isAdmin ? <SplashScreen onFinish={finishSplash} /> : null}
+      <Routes>
       <Route element={<MainLayout />}>
         <Route index element={<Home />} />
 
@@ -125,10 +135,12 @@ export default function App() {
           <Route path="students/:id/edit" element={<StudentFormPage />} />
           <Route path="donations" element={<AllDonorsPage />} />
           <Route path="donations/create" element={<CreateDonorPage />} />
+          <Route path="donations/settings" element={<DonateSettingsPage />} />
           <Route path="settings/contact" element={<ContactSettingsPage />} />
         </Route>
         <Route path="*" element={<Navigate to="/master-admin" replace />} />
       </Route>
     </Routes>
+    </>
   )
 }

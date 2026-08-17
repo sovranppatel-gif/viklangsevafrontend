@@ -72,7 +72,7 @@ export default function ImpactStories({ hideHeader = false, limit } = {}) {
         ) : null}
 
         {!loading && !error && items.length ? (
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {items.map((story, index) => (
               <motion.article
                 key={story.id || story.slug}

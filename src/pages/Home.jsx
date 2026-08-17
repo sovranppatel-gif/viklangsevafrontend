@@ -25,7 +25,7 @@ export default function Home() {
       <Events />
       <Gallery />
       <VolunteerCTA />
-      <BlogSection />
+      <BlogSection limit={3} />
       <Reports />
       <ContactSection />
     </>

@@ -14,7 +14,7 @@ export default function AccessibilityWidget() {
   } = useAccessibility()
 
   return (
-    <div className="fixed bottom-[calc(5.5rem+env(safe-area-inset-bottom))] left-3 z-40 md:bottom-[calc(6rem+env(safe-area-inset-bottom))] md:left-6">
+    <div className="float-corner fixed left-3 z-40 md:left-6">
       {open ? (
         <div className="mb-3 w-[min(16rem,calc(100vw-1.5rem))] rounded-2xl border border-border bg-white p-4 shadow-2xl">
           <div className="mb-3 flex items-center justify-between">

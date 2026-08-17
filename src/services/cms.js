@@ -7,6 +7,7 @@ import { DEFAULT_GALLERY } from '../data/galleryDefaults'
 import { DEFAULT_REPORTS } from '../data/reportsDefaults'
 import { DEFAULT_IMPACT } from '../data/impactDefaults'
 import { DEFAULT_CONTACT_SETTINGS, mergeContactSettings } from '../data/contactSettingsDefaults'
+import { DEFAULT_DONATE_SETTINGS, mergeDonateSettings } from '../data/donateSettingsDefaults'
 import { stories as localStories } from '../data/stories'
 import { impactStats as localImpactStats, donationCampaign as localCampaign } from '../data/organization'
 import { programs as localPrograms } from '../data/programs'
@@ -316,6 +317,38 @@ export async function fetchContactSettings() {
 
 export async function updateContactSettings(payload, token) {
   const response = await api.put('/cms/settings/contact', payload, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+  return response.data
+}
+
+export async function fetchDonateSettings() {
+  try {
+    const response = await api.get('/cms/settings/donate')
+    if (response.data?.success && response.data?.data) {
+      return mergeDonateSettings(response.data.data)
+    }
+  } catch (error) {
+    console.warn('Donate settings API unavailable, using defaults.', error)
+  }
+  return mergeDonateSettings(DEFAULT_DONATE_SETTINGS)
+}
+
+export async function updateDonateSettings(payload, token) {
+  const response = await api.put('/cms/settings/donate', payload, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+  return response.data
+}
+
+export async function uploadDonateQrImage(file, token) {
+  const formData = new FormData()
+  formData.append('image', file)
+  const response = await api.post('/cms/settings/donate/upload', formData, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

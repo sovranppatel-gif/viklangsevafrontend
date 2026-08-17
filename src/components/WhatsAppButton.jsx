@@ -13,7 +13,7 @@ export default function WhatsAppButton() {
   )}`
 
   return (
-    <div className="pointer-events-none fixed right-3 bottom-[calc(5.5rem+env(safe-area-inset-bottom))] z-40 flex flex-col items-end gap-3 md:right-6 md:bottom-[calc(6rem+env(safe-area-inset-bottom))]">
+    <div className="float-corner pointer-events-none fixed right-3 z-40 flex flex-col items-end gap-3 md:right-6">
       <a
         href={href}
         target="_blank"

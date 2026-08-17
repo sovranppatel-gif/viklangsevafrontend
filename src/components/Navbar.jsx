@@ -84,6 +84,7 @@ function navItemClass(active) {
 
 function DesktopDropdown({ item, active }) {
   const [open, setOpen] = useState(false)
+  const wrapRef = useRef(null)
   const timeoutRef = useRef(null)
 
   const show = () => {
@@ -95,28 +96,63 @@ function DesktopDropdown({ item, active }) {
     timeoutRef.current = setTimeout(() => setOpen(false), 120)
   }
 
+  const close = () => {
+    clearTimeout(timeoutRef.current)
+    setOpen(false)
+  }
+
+  useEffect(() => {
+    if (!open) return undefined
+
+    const onPointerDown = (event) => {
+      if (!wrapRef.current?.contains(event.target)) close()
+    }
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') close()
+    }
+
+    document.addEventListener('pointerdown', onPointerDown)
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown)
+      document.removeEventListener('keydown', onKeyDown)
+    }
+  }, [open])
+
   return (
-    <div className="relative" onMouseEnter={show} onMouseLeave={hide}>
-      <NavLink
-        to={item.to}
-        className={() => navItemClass(active)}
-        onFocus={show}
-        aria-current={active ? 'page' : undefined}
+    <div
+      ref={wrapRef}
+      className="relative"
+      onMouseEnter={show}
+      onMouseLeave={hide}
+    >
+      <button
+        type="button"
+        className={navItemClass(active)}
+        aria-expanded={open}
+        aria-haspopup="menu"
+        onClick={() => {
+          clearTimeout(timeoutRef.current)
+          setOpen((value) => !value)
+        }}
       >
         {item.label}
         <ChevronDown className="h-3 w-3" aria-hidden="true" />
-      </NavLink>
+      </button>
       {open ? (
         <div
-          className="absolute left-0 top-full z-50 mt-1 min-w-52 rounded-xl border border-border bg-white p-2 shadow-xl"
-          onMouseEnter={show}
-          onMouseLeave={hide}
+          className={`absolute top-full z-50 mt-1 min-w-52 rounded-xl border border-border bg-white p-2 shadow-xl ${
+            item.label === 'GALLERY' || item.label === 'GET INVOLVED' ? 'right-0' : 'left-0'
+          }`}
+          role="menu"
         >
           {item.children.map((child) => (
             <Link
               key={child.to}
               to={child.to}
+              role="menuitem"
               className="block rounded-lg px-3 py-2 text-sm font-medium text-navy transition hover:bg-muted hover:text-brand"
+              onClick={close}
             >
               {child.label}
             </Link>
@@ -244,7 +280,7 @@ export default function Navbar() {
 
         <div className="ml-auto flex shrink-0 items-center gap-1.5 sm:gap-2 xl:hidden">
           <div
-            className="inline-flex shrink-0 overflow-hidden rounded-full border border-border text-[10px] font-bold"
+            className="inline-flex shrink-0 overflow-hidden rounded-full border border-border text-[10px] font-bold md:hidden"
             role="group"
             aria-label={t('Language', 'भाषा')}
           >
@@ -291,38 +327,49 @@ export default function Navbar() {
               return (
                 <div key={item.label} className="border-b border-border">
                   <div className="flex items-center justify-between">
-                    <Link
-                      to={item.to}
-                      className={`relative flex-1 py-3 text-sm font-semibold transition ${
-                        active ? 'text-brand' : 'text-navy'
-                      }`}
-                      onClick={() => setMobileOpen(false)}
-                      aria-current={active ? 'page' : undefined}
-                    >
-                      {item.label}
-                      <span
-                        className={`absolute bottom-1 left-0 h-0.5 rounded-full bg-brand transition-all duration-300 ${
-                          active ? 'w-8 opacity-100' : 'w-0 opacity-0'
-                        }`}
-                        aria-hidden="true"
-                      />
-                    </Link>
                     {item.children ? (
                       <button
                         type="button"
-                        className="p-3 text-navy"
-                        aria-label={`Toggle ${item.label} submenu`}
+                        className={`relative flex flex-1 items-center justify-between py-3 text-left text-sm font-semibold transition ${
+                          active ? 'text-brand' : 'text-navy'
+                        }`}
+                        aria-expanded={expanded === item.label}
                         onClick={() =>
                           setExpanded((current) => (current === item.label ? null : item.label))
                         }
                       >
+                        {item.label}
                         <ChevronDown
-                          className={`h-4 w-4 transition ${
+                          className={`h-4 w-4 shrink-0 transition ${
                             expanded === item.label ? 'rotate-180' : ''
                           }`}
+                          aria-hidden="true"
+                        />
+                        <span
+                          className={`absolute bottom-1 left-0 h-0.5 rounded-full bg-brand transition-all duration-300 ${
+                            active ? 'w-8 opacity-100' : 'w-0 opacity-0'
+                          }`}
+                          aria-hidden="true"
                         />
                       </button>
-                    ) : null}
+                    ) : (
+                      <Link
+                        to={item.to}
+                        className={`relative flex-1 py-3 text-sm font-semibold transition ${
+                          active ? 'text-brand' : 'text-navy'
+                        }`}
+                        onClick={() => setMobileOpen(false)}
+                        aria-current={active ? 'page' : undefined}
+                      >
+                        {item.label}
+                        <span
+                          className={`absolute bottom-1 left-0 h-0.5 rounded-full bg-brand transition-all duration-300 ${
+                            active ? 'w-8 opacity-100' : 'w-0 opacity-0'
+                          }`}
+                          aria-hidden="true"
+                        />
+                      </Link>
+                    )}
                   </div>
                   {item.children && expanded === item.label ? (
                     <div className="space-y-1 pb-3 pl-3">

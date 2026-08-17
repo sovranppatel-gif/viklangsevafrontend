@@ -72,7 +72,7 @@ export default function Events({ limit = 3 } = {}) {
         ) : null}
 
         {!loading && !error && upcoming.length ? (
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
             {upcoming.map((event, index) => {
               const { day, month } = formatDayMonth(event.date)
               return (
@@ -82,11 +82,11 @@ export default function Events({ limit = 3 } = {}) {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: index * 0.06 }}
-                  className="card card-hover flex gap-3 sm:gap-4"
+                  className="card card-hover flex gap-3 p-3 sm:p-4"
                 >
-                  <div className="flex h-16 w-16 shrink-0 flex-col items-center justify-center rounded-2xl bg-brand text-white sm:h-20 sm:w-20">
-                    <span className="text-xl font-bold leading-none sm:text-2xl">{day}</span>
-                    <span className="mt-1 text-[10px] font-semibold tracking-wide sm:text-xs">
+                  <div className="flex h-14 w-14 shrink-0 flex-col items-center justify-center rounded-xl bg-brand text-white">
+                    <span className="text-lg font-bold leading-none">{day}</span>
+                    <span className="mt-0.5 text-[10px] font-semibold tracking-wide">
                       {month}
                     </span>
                   </div>
@@ -94,20 +94,20 @@ export default function Events({ limit = 3 } = {}) {
                     <span className="inline-flex rounded-full bg-brand-soft px-2 py-0.5 text-[10px] font-bold tracking-wide text-brand uppercase">
                       {pick('Upcoming', 'आगामी')}
                     </span>
-                    <h3 className="mt-1.5 text-base font-bold text-navy sm:text-lg">
+                    <h3 className="mt-1 line-clamp-2 text-sm font-bold text-navy sm:text-base">
                       {pick(event.title, event.titleHi)}
                     </h3>
-                    <p className="mt-2 flex items-start gap-1.5 text-sm text-text-muted">
-                      <MapPin className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-                      <span className="break-words">
+                    <p className="mt-1.5 flex items-start gap-1.5 text-xs text-text-muted sm:text-sm">
+                      <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                      <span className="line-clamp-2 break-words">
                         {pick(event.location, event.locationHi)}
                       </span>
                     </p>
-                    <p className="mt-1 flex items-center gap-1.5 text-sm text-text-muted">
-                      <Clock className="h-4 w-4 shrink-0" aria-hidden="true" />
+                    <p className="mt-1 flex items-center gap-1.5 text-xs text-text-muted sm:text-sm">
+                      <Clock className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
                       {event.time}
                     </p>
-                    <Link to={`/news/events/${event.slug}`} className="link-arrow mt-3">
+                    <Link to={`/news/events/${event.slug}`} className="link-arrow mt-2 text-xs sm:text-sm">
                       {pick(section.detailsLabel, section.detailsLabelHi)}
                     </Link>
                   </div>

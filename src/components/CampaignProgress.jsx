@@ -61,7 +61,7 @@ export default function CampaignProgress() {
               </p>
 
               <div className="mt-6">
-                <div className="mb-2 flex items-end justify-between gap-3">
+                <div className="mb-2 flex flex-wrap items-end justify-between gap-2 sm:gap-3">
                   <div>
                     <p className="text-2xl font-bold text-brand md:text-3xl">
                       {formatCurrencyINR(raised)}

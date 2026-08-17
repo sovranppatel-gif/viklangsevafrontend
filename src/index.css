@@ -107,7 +107,25 @@
   }
 
   .page-with-sticky-cta {
-    padding-bottom: calc(4.5rem + env(safe-area-inset-bottom));
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  html.has-sticky-donate .page-with-sticky-cta {
+    padding-bottom: calc(4.75rem + env(safe-area-inset-bottom));
+  }
+
+  .float-corner {
+    bottom: calc(1.15rem + env(safe-area-inset-bottom));
+  }
+
+  html.has-sticky-donate .float-corner {
+    bottom: calc(5.5rem + env(safe-area-inset-bottom));
+  }
+
+  @media (min-width: 768px) {
+    html.has-sticky-donate .float-corner {
+      bottom: calc(6rem + env(safe-area-inset-bottom));
+    }
   }
 
   .card-hover {
@@ -558,6 +576,28 @@
   height: 8mm;
   margin-bottom: 1mm;
   border-bottom: 1px dotted #333;
+}
+
+@keyframes splash-dot {
+  0%,
+  80%,
+  100% {
+    opacity: 0.2;
+    transform: translateY(0) scale(0.75);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(-5px) scale(1);
+  }
+}
+
+.splash-dot {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background-color: var(--color-brand);
+  animation: splash-dot 1.05s ease-in-out infinite;
 }
 
 @media print {

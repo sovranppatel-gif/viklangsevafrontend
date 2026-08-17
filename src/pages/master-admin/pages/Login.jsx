@@ -1,7 +1,10 @@
 import { Eye, EyeOff, Lock, ShieldCheck, User } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import {
+  clearMasterAdminSession,
+  fetchMasterAdminMe,
+  getMasterAdminToken,
   isMasterAdminAuthenticated,
   loginMasterAdmin,
   setMasterAdminSession,
@@ -9,6 +12,7 @@ import {
 
 export default function MasterAdminLogin() {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -18,8 +22,27 @@ export default function MasterAdminLogin() {
   })
 
   useEffect(() => {
-    if (isMasterAdminAuthenticated()) {
-      navigate('/master-admin/dashboard', { replace: true })
+    if (searchParams.get('reason') === 'session') {
+      setError('Your previous login is not valid on this local server. Please sign in again.')
+    }
+  }, [searchParams])
+
+  useEffect(() => {
+    let cancelled = false
+
+    async function checkExistingSession() {
+      if (!isMasterAdminAuthenticated()) return
+      try {
+        await fetchMasterAdminMe(getMasterAdminToken())
+        if (!cancelled) navigate('/master-admin/dashboard', { replace: true })
+      } catch {
+        clearMasterAdminSession()
+      }
+    }
+
+    checkExistingSession()
+    return () => {
+      cancelled = true
     }
   }, [navigate])
 

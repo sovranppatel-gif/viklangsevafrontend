@@ -86,7 +86,7 @@ export default function ImpactStats() {
           <EmptyState title={t('Impact numbers coming soon', 'प्रभाव आँकड़े जल्द आ रहे हैं')} />
         ) : null}
         {!loading && !error && data?.length ? (
-          <div className="-mx-1 flex snap-x snap-mandatory gap-1 overflow-x-auto pb-1 sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-2 sm:overflow-visible sm:pb-0 md:grid-cols-5 md:gap-4">
+          <div className="-mx-1 flex snap-x snap-mandatory gap-1 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-2 sm:overflow-visible sm:pb-0 md:grid-cols-5 md:gap-4">
             {data.map((stat) => (
               <StatItem key={stat.id} stat={stat} active={inView} isHi={isHi} />
             ))}

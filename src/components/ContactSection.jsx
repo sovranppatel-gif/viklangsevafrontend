@@ -1,5 +1,6 @@
 import { Mail, MapPin, Phone } from 'lucide-react'
 import { useState } from 'react'
+import { useLanguage } from '../context/LanguageContext'
 import { useOrganization } from '../context/OrganizationContext'
 import { submitContactForm } from '../services/api'
 
@@ -11,6 +12,7 @@ const initialForm = {
 }
 
 export default function ContactSection() {
+  const { t } = useLanguage()
   const { organization, contact } = useOrganization()
   const [form, setForm] = useState(initialForm)
   const [status, setStatus] = useState({ type: '', message: '' })
@@ -34,7 +36,10 @@ export default function ContactSection() {
         type: 'error',
         message:
           error?.response?.data?.message ||
-          'Unable to send your message right now. Please try again.',
+          t(
+            'Unable to send your message right now. Please try again.',
+            'अभी संदेश नहीं भेजा जा सका। कृपया फिर कोशिश करें।',
+          ),
       })
     } finally {
       setSubmitting(false)
@@ -92,11 +97,11 @@ export default function ContactSection() {
         </div>
 
         <div className="card">
-          <h3 className="text-xl font-bold text-navy">Send a Message</h3>
+          <h3 className="text-xl font-bold text-navy">{t('Send a Message', 'संदेश भेजें')}</h3>
           <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="name" className="mb-1.5 block text-sm font-medium text-navy">
-                Name
+                {t('Name', 'नाम')}
               </label>
               <input
                 id="name"
@@ -109,7 +114,7 @@ export default function ContactSection() {
             </div>
             <div>
               <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-navy">
-                Email
+                {t('Email', 'ईमेल')}
               </label>
               <input
                 id="email"
@@ -123,7 +128,7 @@ export default function ContactSection() {
             </div>
             <div>
               <label htmlFor="mobile" className="mb-1.5 block text-sm font-medium text-navy">
-                Mobile
+                {t('Mobile', 'मोबाइल')}
               </label>
               <input
                 id="mobile"
@@ -137,7 +142,7 @@ export default function ContactSection() {
             </div>
             <div>
               <label htmlFor="message" className="mb-1.5 block text-sm font-medium text-navy">
-                Message
+                {t('Message', 'संदेश')}
               </label>
               <textarea
                 id="message"
@@ -150,7 +155,7 @@ export default function ContactSection() {
               />
             </div>
             <button type="submit" className="btn-primary w-full" disabled={submitting}>
-              {submitting ? 'Sending…' : 'Send Message'}
+              {submitting ? t('Sending…', 'भेजा जा रहा है…') : t('Send Message', 'संदेश भेजें')}
             </button>
             {status.message ? (
               <p

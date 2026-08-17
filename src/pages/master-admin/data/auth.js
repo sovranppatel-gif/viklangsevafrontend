@@ -39,3 +39,14 @@ export async function loginMasterAdmin(email, password) {
   })
   return response.data
 }
+
+export async function fetchMasterAdminMe(token) {
+  const response = await api.get('/auth/me', {
+    headers: token
+      ? {
+          Authorization: `Bearer ${token}`,
+        }
+      : {},
+  })
+  return response.data
+}

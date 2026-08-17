@@ -16,8 +16,8 @@ export default function TopBar() {
 
   return (
     <div className="hidden border-b border-white/10 bg-navy text-white md:block">
-      <div className="container-page flex items-center justify-between py-2 text-xs lg:text-sm">
-        <div className="flex flex-wrap items-center gap-4 lg:gap-6">
+      <div className="container-page flex flex-wrap items-center justify-between gap-x-4 gap-y-2 py-2 text-xs lg:text-sm">
+        <div className="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-1 lg:gap-6">
           <a
             href={`tel:${organization.phone}`}
             className="inline-flex items-center gap-2 transition hover:text-accent-yellow"
@@ -32,9 +32,9 @@ export default function TopBar() {
             <Mail className="h-3.5 w-3.5" aria-hidden="true" />
             <span>{organization.email}</span>
           </a>
-          <span className="inline-flex items-center gap-2 text-white/80">
-            <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
-            {organization.location}
+          <span className="hidden min-w-0 items-center gap-2 text-white/80 lg:inline-flex">
+            <MapPin className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+            <span className="truncate">{organization.location}</span>
           </span>
         </div>
 
@@ -61,7 +61,7 @@ export default function TopBar() {
               हिं
             </button>
           </div>
-          <span className="text-white/70">{t('Follow Us', 'हमें फॉलो करें')}</span>
+          <span className="hidden text-white/70 lg:inline">{t('Follow Us', 'हमें फॉलो करें')}</span>
           <div className="flex items-center gap-2">
             {socialLinks.map(({ name, href, icon: Icon }) => (
               <a

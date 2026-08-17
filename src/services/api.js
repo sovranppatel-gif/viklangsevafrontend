@@ -43,12 +43,40 @@ export const api = axios.create({
   timeout: 30000,
 })
 
-api.interceptors.request.use((config) => {
-  const token = sessionStorage.getItem('vss_master_admin_token')
-  if (token && !config.headers?.Authorization) {
-    config.headers = config.headers || {}
-    config.headers.Authorization = `Bearer ${token}`
+function readHeader(headers, name) {
+  if (!headers) return undefined
+  if (typeof headers.get === 'function') return headers.get(name)
+  return headers[name] || headers[name.toLowerCase()]
+}
+
+function writeHeader(headers, name, value) {
+  if (!headers) return
+  if (typeof headers.set === 'function') {
+    headers.set(name, value)
+    return
   }
+  headers[name] = value
+}
+
+api.interceptors.request.use((config) => {
+  config.headers = config.headers || {}
+
+  const token = sessionStorage.getItem('vss_master_admin_token')
+  if (token && !readHeader(config.headers, 'Authorization')) {
+    writeHeader(config.headers, 'Authorization', `Bearer ${token}`)
+  }
+
+  // AxiosHeaders + FormData can keep application/json; that drops the file and
+  // can also skip custom headers. Let the browser set the multipart boundary.
+  if (typeof FormData !== 'undefined' && config.data instanceof FormData) {
+    if (typeof config.headers.delete === 'function') {
+      config.headers.delete('Content-Type')
+    } else {
+      delete config.headers['Content-Type']
+      delete config.headers['content-type']
+    }
+  }
+
   return config
 })
 

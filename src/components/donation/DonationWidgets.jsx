@@ -1,17 +1,15 @@
 import { CheckCircle2, Copy, FileText, ShieldCheck } from 'lucide-react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import {
-  buildUpiQrImageUrl,
-  getDonationImpact,
-  organization,
-} from '../../data/organization'
+import { buildUpiQrImageUrl } from '../../data/organization'
 import { useLanguage } from '../../context/LanguageContext'
-import { DONATE_COPY } from '../../data/donateDefaults'
+import { useOrganization } from '../../context/OrganizationContext'
 import { formatCurrencyINR } from '../../utils/format'
+import { mediaUrl } from '../../utils/media'
 
 export function TrustStrip({ className = '' }) {
   const { t, isHi } = useLanguage()
+  const { organization } = useOrganization()
 
   return (
     <div
@@ -33,12 +31,13 @@ export function TrustStrip({ className = '' }) {
 
 export function Form80GNotice({ compact = false, className = '' }) {
   const { t } = useLanguage()
+  const { donate } = useOrganization()
 
   if (compact) {
     return (
       <p className={`text-xs font-medium leading-relaxed text-navy sm:text-sm ${className}`}>
-        <span className="font-bold text-brand">{t(DONATE_COPY.form80gTitle, DONATE_COPY.form80gTitleHi)}: </span>
-        {t(DONATE_COPY.form80gShort, DONATE_COPY.form80gShortHi)}
+        <span className="font-bold text-brand">{t(donate.form80gTitle, donate.form80gTitleHi)}: </span>
+        {t(donate.form80gShort, donate.form80gShortHi)}
       </p>
     )
   }
@@ -50,35 +49,23 @@ export function Form80GNotice({ compact = false, className = '' }) {
     >
       <p className="flex items-start gap-2 text-sm font-bold text-navy sm:text-base">
         <FileText className="mt-0.5 h-4 w-4 shrink-0 text-brand sm:h-5 sm:w-5" aria-hidden="true" />
-        <span>{t(DONATE_COPY.form80gTitle, DONATE_COPY.form80gTitleHi)}</span>
+        <span>{t(donate.form80gTitle, donate.form80gTitleHi)}</span>
       </p>
       <p className="mt-2 text-sm leading-relaxed text-text-muted">
-        {t(DONATE_COPY.form80gNotice, DONATE_COPY.form80gNoticeHi)}
+        {t(donate.form80gNotice, donate.form80gNoticeHi)}
       </p>
     </div>
   )
 }
 
-export function ImpactLine({ amount, className = '' }) {
-  const { lang } = useLanguage()
-  const impact = getDonationImpact(amount, lang)
-  if (!impact || !amount) return null
-
-  return (
-    <p
-      className={`rounded-xl bg-brand-soft px-3 py-2 text-xs leading-snug font-medium break-words text-navy transition sm:text-sm ${className}`}
-      role="status"
-    >
-      {formatCurrencyINR(amount)} → {impact}
-    </p>
-  )
-}
-
 export function UpiPaymentPanel({ amount }) {
   const { t } = useLanguage()
+  const { organization } = useOrganization()
   const [copied, setCopied] = useState(false)
   const upi = organization.payment
-  const qrUrl = buildUpiQrImageUrl(amount || 0)
+  const qrUrl = upi.qrImageUrl
+    ? mediaUrl(upi.qrImageUrl)
+    : buildUpiQrImageUrl(amount || 0, 220, upi)
 
   const copyUpi = async () => {
     try {
@@ -141,7 +128,9 @@ export function UpiPaymentPanel({ amount }) {
           >
             {t('Share payment on WhatsApp', 'भुगतान WhatsApp पर भेजें')}
           </a>
-          <p className="text-[11px] leading-relaxed text-text-muted">{upi.note}</p>
+          <p className="text-[11px] leading-relaxed text-text-muted">
+            {t(upi.note, upi.noteHi)}
+          </p>
         </div>
       </div>
     </div>

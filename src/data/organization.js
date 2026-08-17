@@ -147,8 +147,8 @@ export function getDonationImpact(amount, lang = 'en') {
   return ''
 }
 
-export function buildUpiPayUrl(amount) {
-  const { upiId, upiName } = organization.payment
+export function buildUpiPayUrl(amount, payment = organization.payment) {
+  const { upiId, upiName } = payment
   const params = new URLSearchParams({
     pa: upiId,
     pn: upiName,
@@ -159,7 +159,7 @@ export function buildUpiPayUrl(amount) {
   return `upi://pay?${params.toString()}`
 }
 
-export function buildUpiQrImageUrl(amount, size = 220) {
-  const data = encodeURIComponent(buildUpiPayUrl(amount))
+export function buildUpiQrImageUrl(amount, size = 220, payment = organization.payment) {
+  const data = encodeURIComponent(buildUpiPayUrl(amount, payment))
   return `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${data}`
 }

@@ -11,7 +11,7 @@ import ErrorState from './ui/ErrorState'
 import LoadingState from './ui/LoadingState'
 import SectionHeader from './ui/SectionHeader'
 
-export default function BlogSection() {
+export default function BlogSection({ limit } = {}) {
   const { isHi } = useLanguage()
   const [section, setSection] = useState(DEFAULT_BLOG['home-blog'])
   const [data, setData] = useState([])
@@ -44,6 +44,7 @@ export default function BlogSection() {
   }, [])
 
   const pick = (en, hi) => (isHi && hi ? hi : en)
+  const items = typeof limit === 'number' ? data.slice(0, limit) : data
 
   if (section.isActive === false) return null
 
@@ -65,13 +66,13 @@ export default function BlogSection() {
 
         {loading ? <LoadingState label="Loading articles…" /> : null}
         {error ? <ErrorState title="Unable to load articles" /> : null}
-        {!loading && !error && (!data || data.length === 0) ? (
+        {!loading && !error && (!items || items.length === 0) ? (
           <EmptyState title="No articles published yet" />
         ) : null}
 
-        {!loading && !error && data?.length ? (
-          <div className="grid gap-6 md:grid-cols-3">
-            {data.map((post, index) => (
+        {!loading && !error && items?.length ? (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {items.map((post, index) => (
               <motion.article
                 key={post.id || post.slug}
                 initial={{ opacity: 0, y: 18 }}

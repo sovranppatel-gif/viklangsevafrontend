@@ -1,16 +1,19 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { organization as localOrganization } from '../data/organization'
 import { mergeContactSettings } from '../data/contactSettingsDefaults'
-import { fetchContactSettings } from '../services/cms'
+import { mergeDonateSettings } from '../data/donateSettingsDefaults'
+import { fetchContactSettings, fetchDonateSettings } from '../services/cms'
 
 const OrganizationContext = createContext({
   organization: localOrganization,
   contact: mergeContactSettings(),
+  donate: mergeDonateSettings(),
   loading: true,
 })
 
 export function OrganizationProvider({ children }) {
   const [contact, setContact] = useState(() => mergeContactSettings())
+  const [donate, setDonate] = useState(() => mergeDonateSettings())
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -18,10 +21,18 @@ export function OrganizationProvider({ children }) {
 
     async function load() {
       try {
-        const data = await fetchContactSettings()
-        if (!cancelled) setContact(mergeContactSettings(data))
+        const [contactData, donateData] = await Promise.all([
+          fetchContactSettings(),
+          fetchDonateSettings(),
+        ])
+        if (cancelled) return
+        setContact(mergeContactSettings(contactData))
+        setDonate(mergeDonateSettings(donateData))
       } catch {
-        if (!cancelled) setContact(mergeContactSettings())
+        if (!cancelled) {
+          setContact(mergeContactSettings())
+          setDonate(mergeDonateSettings())
+        }
       } finally {
         if (!cancelled) setLoading(false)
       }
@@ -52,10 +63,23 @@ export function OrganizationProvider({ children }) {
         ...(contact.social || {}),
       },
       mapEmbedUrl: contact.mapEmbedUrl || localOrganization.mapEmbedUrl,
+      payment: {
+        ...localOrganization.payment,
+        upiId: donate.upiId,
+        upiName: donate.upiName,
+        qrImageUrl: donate.qrImageUrl,
+        accountName: donate.accountName,
+        accountNumber: donate.accountNumber,
+        ifsc: donate.ifsc,
+        bankName: donate.bankName,
+        branch: donate.branch,
+        note: donate.note,
+        noteHi: donate.noteHi,
+      },
     }
 
-    return { organization: org, contact, loading }
-  }, [contact, loading])
+    return { organization: org, contact, donate, loading }
+  }, [contact, donate, loading])
 
   return <OrganizationContext.Provider value={value}>{children}</OrganizationContext.Provider>
 }

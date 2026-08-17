@@ -1,6 +1,7 @@
 import { CheckCircle2, Link2, Loader2, Upload, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { mediaUrl } from '../../../../utils/media'
+import ImageCropModal from './ImageCropModal'
 
 export const cmsInputClass =
   'w-full rounded-xl border border-border bg-white px-3 py-2.5 text-sm text-text outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/15'
@@ -54,15 +55,39 @@ export function ImageSourcePicker({
   onUpload,
   uploading = false,
   label = 'Image',
+  previewClassName = 'h-36 w-full object-cover',
+  cropAspect = 1,
+  lockCropAspect = false,
 }) {
   const [mode, setMode] = useState(String(value || '').includes('/uploads/') ? 'upload' : 'url')
+  const [cropSrc, setCropSrc] = useState('')
+  const [cropFile, setCropFile] = useState(null)
   const fileRef = useRef(null)
 
-  async function handleFile(e) {
+  useEffect(() => {
+    return () => {
+      if (cropSrc) URL.revokeObjectURL(cropSrc)
+    }
+  }, [cropSrc])
+
+  function closeCrop() {
+    if (cropSrc) URL.revokeObjectURL(cropSrc)
+    setCropSrc('')
+    setCropFile(null)
+  }
+
+  function handleFile(e) {
     const file = e.target.files?.[0]
     e.target.value = ''
     if (!file || !onUpload) return
+    if (cropSrc) URL.revokeObjectURL(cropSrc)
+    setCropFile(file)
+    setCropSrc(URL.createObjectURL(file))
+  }
+
+  async function handleCroppedUpload(file) {
     await onUpload(file)
+    closeCrop()
   }
 
   return (
@@ -132,8 +157,20 @@ export function ImageSourcePicker({
 
       {value ? (
         <div className="overflow-hidden rounded-xl border border-border bg-muted">
-          <img src={mediaUrl(value)} alt="Preview" className="h-36 w-full object-cover" />
+          <img src={mediaUrl(value)} alt="Preview" className={previewClassName} />
         </div>
+      ) : null}
+
+      {cropSrc && cropFile ? (
+        <ImageCropModal
+          src={cropSrc}
+          file={cropFile}
+          aspect={cropAspect}
+          lockAspect={lockCropAspect}
+          uploading={uploading}
+          onCancel={closeCrop}
+          onUpload={handleCroppedUpload}
+        />
       ) : null}
     </div>
   )

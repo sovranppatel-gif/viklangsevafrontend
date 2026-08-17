@@ -87,7 +87,7 @@ export default function Gallery({ showHeader = true, limit }) {
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.04 }}
                 className={`group overflow-hidden rounded-2xl ${
-                  index === 0 ? 'md:col-span-2 md:row-span-2' : ''
+                  index === 0 ? 'col-span-2 md:row-span-2' : ''
                 }`}
               >
                 <img

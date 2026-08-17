@@ -85,9 +85,9 @@ export default function AboutSection() {
             {(content.trustPoints || []).map((point) => {
               const label = pick(point.text, point.textHi)
               return (
-                <li key={label} className="flex items-center gap-2 text-sm font-medium text-navy">
-                  <CheckCircle2 className="h-5 w-5 text-accent-green" aria-hidden="true" />
-                  {label}
+                <li key={label} className="flex items-start gap-2 text-sm font-medium text-navy">
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-accent-green" aria-hidden="true" />
+                  <span className="min-w-0 break-words">{label}</span>
                 </li>
               )
             })}

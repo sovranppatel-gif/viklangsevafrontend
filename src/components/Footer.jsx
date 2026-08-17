@@ -49,7 +49,7 @@ export default function Footer() {
               <img
                 src="/logo.png"
                 alt={`${organization.name} logo`}
-                className="h-12 w-auto object-contain sm:h-14 xl:h-28"
+                className="h-12 w-auto shrink-0 object-contain sm:h-14"
               />
               <div className="min-w-0">
                 <p className="text-base font-bold sm:text-lg">{organization.name}</p>

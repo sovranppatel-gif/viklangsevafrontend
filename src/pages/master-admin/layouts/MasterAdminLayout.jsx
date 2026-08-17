@@ -22,6 +22,7 @@ import { useEffect, useState } from 'react'
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import {
   clearMasterAdminSession,
+  fetchMasterAdminMe,
   getMasterAdminToken,
   isMasterAdminAuthenticated,
 } from '../data/auth'
@@ -33,8 +34,9 @@ const navItems = [
     label: 'Donations',
     icon: HandHeart,
     children: [
-      { to: '/master-admin/donations', label: 'All Donors' },
+      { to: '/master-admin/donations', label: 'All Donors', end: true },
       { to: '/master-admin/donations/create', label: 'Create Donor' },
+      { to: '/master-admin/donations/settings', label: 'Donate Page' },
     ],
   },
   {
@@ -265,6 +267,7 @@ function Sidebar({ onClose }) {
                       <NavLink
                         key={child.to}
                         to={child.to}
+                        end={child.end}
                         onClick={onClose}
                         className={({ isActive }) =>
                           `block rounded-lg px-3 py-2 text-[12px] font-medium transition ${
@@ -327,11 +330,29 @@ export default function MasterAdminLayout() {
   const [notificationCount, setNotificationCount] = useState(0)
 
   useEffect(() => {
-    if (!isMasterAdminAuthenticated()) {
-      navigate('/master-admin', { replace: true })
-      return
+    let cancelled = false
+
+    async function verifySession() {
+      if (!isMasterAdminAuthenticated()) {
+        navigate('/master-admin', { replace: true })
+        return
+      }
+
+      try {
+        await fetchMasterAdminMe(getMasterAdminToken())
+        if (!cancelled) setReady(true)
+      } catch {
+        clearMasterAdminSession()
+        if (!cancelled) {
+          navigate('/master-admin?reason=session', { replace: true })
+        }
+      }
     }
-    setReady(true)
+
+    verifySession()
+    return () => {
+      cancelled = true
+    }
   }, [navigate])
 
   useEffect(() => {
