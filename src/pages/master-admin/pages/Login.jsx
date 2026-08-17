@@ -70,7 +70,7 @@ export default function MasterAdminLogin() {
       const message =
         err?.response?.data?.message ||
         (err?.code === 'ERR_NETWORK'
-          ? 'Cannot reach server. Check VITE_API_BASE_URL in .env and restart the frontend.'
+          ? 'Cannot reach API. If this is the Vercel site, the server must allow this frontend URL (CORS). Redeploy both apps after env changes.'
           : 'Invalid email or password.')
       setError(message)
     } finally {

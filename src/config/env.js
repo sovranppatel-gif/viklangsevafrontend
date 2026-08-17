@@ -1,3 +1,5 @@
+const PRODUCTION_API_ORIGIN = 'https://viklangsevaserver.vercel.app'
+
 function stripSlash(value) {
   return String(value || '')
     .trim()
@@ -6,12 +8,18 @@ function stripSlash(value) {
 
 function originFromEnv() {
   const raw = stripSlash(import.meta.env.VITE_API_BASE_URL || '')
-  if (!raw || raw === '/api') return ''
-  return raw.replace(/\/api$/, '')
+  if (raw && raw !== '/api') {
+    return raw.replace(/\/api$/, '')
+  }
+
+  // Vite bakes env at build time. If Vercel env was missing during build,
+  // production still talks to the live API instead of same-origin /api.
+  if (import.meta.env.PROD) return PRODUCTION_API_ORIGIN
+  return ''
 }
 
 /** true when backend calls should run */
-export const USE_API = import.meta.env.VITE_USE_API === 'true'
+export const USE_API = import.meta.env.PROD || import.meta.env.VITE_USE_API === 'true'
 
 /**
  * Backend origin from `.env` `VITE_API_BASE_URL`.
