@@ -109,7 +109,7 @@ function emptyEvent() {
     image: '',
     ctaLabel: 'Join as Volunteer',
     ctaLabelHi: 'स्वयंसेवक बनें',
-    ctaLink: '/get-involved/volunteer',
+    ctaLink: '/volunteer',
     isActive: true,
   }
 }

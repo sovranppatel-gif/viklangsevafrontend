@@ -31,6 +31,40 @@ export const AVAILABILITY_OPTIONS = [
   'As needed',
 ]
 
+export function emptyVolunteerApplication() {
+  return {
+    name: '',
+    fatherName: '',
+    motherName: '',
+    gender: '',
+    dateOfBirth: '',
+    bloodGroup: '',
+    photoUrl: '',
+    aadhaarNumber: '',
+    aadhaarDocumentUrl: '',
+    pan: '',
+    panDocumentUrl: '',
+    email: '',
+    phone: '',
+    whatsapp: '',
+    alternatePhone: '',
+    addressLine1: '',
+    addressLine2: '',
+    city: 'Narsinghpur',
+    state: 'Madhya Pradesh',
+    pincode: '',
+    qualification: '',
+    occupation: '',
+    skills: '',
+    interest: 'Education Support',
+    availability: 'As needed',
+    emergencyName: '',
+    emergencyPhone: '',
+    emergencyRelation: '',
+    message: '',
+  }
+}
+
 export function formatVolunteerDate(value) {
   if (!value) return '—'
   try {

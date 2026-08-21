@@ -174,7 +174,7 @@ export const DEFAULT_BLOG = {
           'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80',
         ctaLabel: 'Join as Volunteer',
         ctaLabelHi: 'स्वयंसेवक बनें',
-        ctaLink: '/get-involved/volunteer',
+        ctaLink: '/volunteer',
         isActive: true,
       },
       {
@@ -194,7 +194,7 @@ export const DEFAULT_BLOG = {
           'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1200&q=80',
         ctaLabel: 'Join as Volunteer',
         ctaLabelHi: 'स्वयंसेवक बनें',
-        ctaLink: '/get-involved/volunteer',
+        ctaLink: '/volunteer',
         isActive: true,
       },
       {
@@ -214,7 +214,7 @@ export const DEFAULT_BLOG = {
           'https://images.unsplash.com/photo-1532375810709-75b1da00537c?auto=format&fit=crop&w=1200&q=80',
         ctaLabel: 'Join as Volunteer',
         ctaLabelHi: 'स्वयंसेवक बनें',
-        ctaLink: '/get-involved/volunteer',
+        ctaLink: '/volunteer',
         isActive: true,
       },
       {
@@ -234,7 +234,7 @@ export const DEFAULT_BLOG = {
           'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=80',
         ctaLabel: 'Join as Volunteer',
         ctaLabelHi: 'स्वयंसेवक बनें',
-        ctaLink: '/get-involved/volunteer',
+        ctaLink: '/volunteer',
         isActive: true,
       },
       {
@@ -254,7 +254,7 @@ export const DEFAULT_BLOG = {
           'https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&w=1200&q=80',
         ctaLabel: 'Join as Volunteer',
         ctaLabelHi: 'स्वयंसेवक बनें',
-        ctaLink: '/get-involved/volunteer',
+        ctaLink: '/volunteer',
         isActive: true,
       },
     ],

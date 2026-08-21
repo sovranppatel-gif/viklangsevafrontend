@@ -16,9 +16,7 @@ const quickLinks = [
 
 const involveLinks = [
   { label: 'Donate', to: '/donate' },
-  { label: 'Become a Volunteer', to: '/get-involved/volunteer' },
-  { label: 'Partner With Us', to: '/get-involved/partner' },
-  { label: 'Fundraise', to: '/get-involved/fundraise' },
+  { label: 'Become a Volunteer', to: '/volunteer' },
 ]
 
 export default function Footer() {

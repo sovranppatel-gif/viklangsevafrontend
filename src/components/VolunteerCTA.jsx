@@ -6,7 +6,7 @@ export default function VolunteerCTA() {
   const { t } = useLanguage()
 
   return (
-    <section id="get-involved" className="section-padding bg-muted scroll-mt-28">
+    <section id="volunteer" className="section-padding bg-muted scroll-mt-28">
       <div className="container-page">
         <div className="grid items-center gap-0 overflow-hidden rounded-2xl bg-navy sm:rounded-3xl lg:grid-cols-2">
           <div className="p-5 text-white sm:p-8 md:p-12">
@@ -23,7 +23,7 @@ export default function VolunteerCTA() {
               )}
             </p>
             <div className="mt-6 sm:mt-8">
-              <Link to="/get-involved/volunteer" className="btn-primary">
+              <Link to="/volunteer" className="btn-primary">
                 {t('Become a Volunteer', 'स्वयंसेवक बनें')}
               </Link>
             </div>

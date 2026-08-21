@@ -13,9 +13,6 @@ import Donate from './pages/Donate'
 import GalleryPage from './pages/Gallery'
 import Photos from './pages/gallery/Photos'
 import Videos from './pages/gallery/Videos'
-import Fundraise from './pages/getInvolved/Fundraise'
-import GetInvolved from './pages/getInvolved/GetInvolved'
-import Partner from './pages/getInvolved/Partner'
 import Volunteer from './pages/getInvolved/Volunteer'
 import Home from './pages/Home'
 import Impact from './pages/Impact'
@@ -95,10 +92,9 @@ export default function App() {
         <Route path="gallery/photos" element={<Photos />} />
         <Route path="gallery/videos" element={<Videos />} />
 
-        <Route path="get-involved" element={<GetInvolved />} />
-        <Route path="get-involved/volunteer" element={<Volunteer />} />
-        <Route path="get-involved/partner" element={<Partner />} />
-        <Route path="get-involved/fundraise" element={<Fundraise />} />
+        <Route path="volunteer" element={<Volunteer />} />
+        <Route path="get-involved" element={<Navigate to="/volunteer" replace />} />
+        <Route path="get-involved/volunteer" element={<Navigate to="/volunteer" replace />} />
 
         <Route path="donate" element={<Donate />} />
         <Route path="reports" element={<ReportsPage />} />

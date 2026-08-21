@@ -102,7 +102,7 @@ export default function ProgramDetails() {
                 {pick(data.primaryCtaLabel, data.primaryCtaLabelHi) || 'Support This Program'}
               </Link>
               <Link
-                to={data.secondaryCtaLink || '/get-involved/volunteer'}
+                to={data.secondaryCtaLink || '/volunteer'}
                 className="btn-outline"
               >
                 {pick(data.secondaryCtaLabel, data.secondaryCtaLabelHi) || 'Volunteer With Us'}

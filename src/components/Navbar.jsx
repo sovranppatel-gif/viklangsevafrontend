@@ -59,16 +59,7 @@ const navItems = [
       { label: 'Videos', to: '/gallery/videos' },
     ],
   },
-  {
-    label: 'GET INVOLVED',
-    to: '/get-involved',
-    sectionId: 'get-involved',
-    children: [
-      { label: 'Volunteer', to: '/get-involved/volunteer' },
-      { label: 'Partner With Us', to: '/get-involved/partner' },
-      { label: 'Fundraise', to: '/get-involved/fundraise' },
-    ],
-  },
+  { label: 'VOLUNTEER', to: '/volunteer', sectionId: 'volunteer' },
   { label: 'CONTACT', to: '/contact', sectionId: 'contact' },
 ]
 
@@ -142,7 +133,7 @@ function DesktopDropdown({ item, active }) {
       {open ? (
         <div
           className={`absolute top-full z-50 mt-1 min-w-52 rounded-xl border border-border bg-white p-2 shadow-xl ${
-            item.label === 'GALLERY' || item.label === 'GET INVOLVED' ? 'right-0' : 'left-0'
+            item.label === 'GALLERY' ? 'right-0' : 'left-0'
           }`}
           role="menu"
         >

@@ -58,6 +58,25 @@ export async function issueVolunteerCard(id, token) {
   return response.data
 }
 
+export async function lookupVolunteerIdCard(aadhaarNumber) {
+  const response = await api.post('/volunteers/id-card', { aadhaarNumber })
+  return response.data
+}
+
+export async function uploadVolunteerPhotoPublic(file) {
+  const formData = new FormData()
+  formData.append('image', file)
+  const response = await api.post('/volunteers/photo', formData)
+  return response.data
+}
+
+export async function uploadVolunteerDocumentPublic(file) {
+  const formData = new FormData()
+  formData.append('file', file)
+  const response = await api.post('/volunteers/document', formData)
+  return response.data
+}
+
 export async function uploadVolunteerPhoto(file, token) {
   const formData = new FormData()
   formData.append('image', file)

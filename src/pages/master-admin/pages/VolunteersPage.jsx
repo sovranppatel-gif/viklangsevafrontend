@@ -1,4 +1,4 @@
-import { CreditCard, Loader2, Pencil, Plus, Printer, Search, Trash2, Users, X } from 'lucide-react'
+import { Check, CreditCard, Loader2, Pencil, Plus, Printer, Search, Trash2, Users, X } from 'lucide-react'
 import { FaWhatsapp } from 'react-icons/fa6'
 import { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -118,6 +118,10 @@ export default function VolunteersPage() {
     }
   }
 
+  const canIssueCard = (item) => item.status === 'accepted' || item.status === 'active'
+  const canApprove = (item) => item.status === 'new' || item.status === 'contacted'
+  const handleApprove = (id) => handleStatusChange(id, 'accepted')
+
   const openIdCard = async (item) => {
     setBusyId(item.id)
     try {
@@ -127,9 +131,8 @@ export default function VolunteersPage() {
       setItems((current) => current.map((row) => (row.id === item.id ? { ...row, ...updated } : row)))
       setCardVolunteer(updated)
       setToast(result?.message || 'ID card ready.')
-    } catch {
-      setCardVolunteer(item)
-      setError('Could not issue ID number automatically. You can still print the card.')
+    } catch (err) {
+      setError(err?.response?.data?.message || 'Could not issue ID card. Approve the request first.')
     } finally {
       setBusyId('')
     }
@@ -150,7 +153,7 @@ export default function VolunteersPage() {
           <p className="text-sm font-medium text-brand">Volunteer</p>
           <h1 className="mt-1 text-2xl font-bold text-navy">All Volunteers</h1>
           <p className="mt-1 text-sm text-text-muted">
-            Website applications and office registrations. Generate ID cards from this list.
+            Website applications appear as <strong>New</strong>. Approve first, then generate the ID card.
           </p>
         </div>
         <Link
@@ -309,9 +312,21 @@ export default function VolunteersPage() {
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex flex-wrap gap-1.5">
+                        {canApprove(item) ? (
+                          <button
+                            type="button"
+                            disabled={busyId === item.id}
+                            onClick={() => handleApprove(item.id)}
+                            className="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-2.5 py-1.5 text-xs font-semibold text-white hover:bg-emerald-700 disabled:opacity-50"
+                          >
+                            <Check className="h-3.5 w-3.5" />
+                            Approve
+                          </button>
+                        ) : null}
                         <button
                           type="button"
-                          disabled={busyId === item.id}
+                          disabled={busyId === item.id || !canIssueCard(item)}
+                          title={canIssueCard(item) ? 'Generate ID card' : 'Approve this request first'}
                           onClick={() => openIdCard(item)}
                           className="inline-flex items-center gap-1 rounded-lg bg-navy px-2.5 py-1.5 text-xs font-semibold text-white hover:bg-navy/90 disabled:opacity-50"
                         >

@@ -6,6 +6,7 @@ import {
   createVolunteerAdmin,
   fetchVolunteerById,
   updateVolunteer,
+  uploadVolunteerDocumentPublic,
   uploadVolunteerPhoto,
 } from '../../../services/volunteers'
 import {
@@ -14,6 +15,7 @@ import {
   VOLUNTEER_DEPARTMENTS,
   VOLUNTEER_STATUSES,
 } from '../../../utils/volunteer'
+import IdentityDocUpload from '../../../components/volunteer/IdentityDocUpload'
 import { CmsField, CmsToast, ImageSourcePicker, cmsInputClass, cmsTextareaClass } from './cms/CmsUi'
 
 const emptyForm = {
@@ -25,7 +27,9 @@ const emptyForm = {
   bloodGroup: '',
   photoUrl: '',
   aadhaarNumber: '',
+  aadhaarDocumentUrl: '',
   pan: '',
+  panDocumentUrl: '',
   email: '',
   phone: '',
   whatsapp: '',
@@ -57,6 +61,7 @@ export default function VolunteerFormPage() {
   const [saving, setSaving] = useState(false)
   const [loading, setLoading] = useState(isEdit)
   const [uploading, setUploading] = useState(false)
+  const [docUploading, setDocUploading] = useState('')
   const [error, setError] = useState('')
   const [toast, setToast] = useState('')
 
@@ -111,6 +116,24 @@ export default function VolunteerFormPage() {
       setError(err?.response?.data?.message || 'Unable to upload photo.')
     } finally {
       setUploading(false)
+    }
+  }
+
+  const handleDocumentUpload = async (field, file) => {
+    setDocUploading(field)
+    setError('')
+    try {
+      const result = await uploadVolunteerDocumentPublic(file)
+      if (!result?.success || !result?.data?.fileUrl) {
+        setError(result?.message || 'Document upload failed.')
+        return
+      }
+      setField(field, result.data.fileUrl)
+      setToast('Document uploaded.')
+    } catch (err) {
+      setError(err?.response?.data?.message || 'Unable to upload document.')
+    } finally {
+      setDocUploading('')
     }
   }
 
@@ -242,6 +265,22 @@ export default function VolunteerFormPage() {
                 onChange={(e) => setField('pan', e.target.value.toUpperCase())}
               />
             </CmsField>
+            <IdentityDocUpload
+              label="Aadhaar card upload"
+              hint="Front or full card scan"
+              value={form.aadhaarDocumentUrl}
+              uploading={docUploading === 'aadhaarDocumentUrl'}
+              onUpload={(file) => handleDocumentUpload('aadhaarDocumentUrl', file)}
+              onError={setError}
+            />
+            <IdentityDocUpload
+              label="PAN card upload"
+              hint="Optional"
+              value={form.panDocumentUrl}
+              uploading={docUploading === 'panDocumentUrl'}
+              onUpload={(file) => handleDocumentUpload('panDocumentUrl', file)}
+              onError={setError}
+            />
           </div>
         </section>
 

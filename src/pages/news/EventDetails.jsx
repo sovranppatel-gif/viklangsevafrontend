@@ -120,7 +120,7 @@ export default function EventDetails() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               {status === 'upcoming' ? (
-                <Link to={data.ctaLink || '/get-involved/volunteer'} className="btn-primary">
+                <Link to={data.ctaLink || '/volunteer'} className="btn-primary">
                   {pick(data.ctaLabel, data.ctaLabelHi) || 'Join as Volunteer'}
                 </Link>
               ) : (

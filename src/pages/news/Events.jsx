@@ -101,7 +101,7 @@ export default function EventsPage() {
             </div>
           </div>
           <Link
-            to="/get-involved/volunteer"
+            to="/volunteer"
             className="flex items-center gap-3 rounded-2xl bg-navy px-4 py-3 text-white transition hover:bg-navy-light"
           >
             <span className="rounded-xl bg-white/10 p-2.5">
@@ -219,7 +219,7 @@ export default function EventsPage() {
                           {t('View event details', 'विवरण देखें')}
                         </Link>
                         <Link
-                          to={featured.ctaLink || '/get-involved/volunteer'}
+                          to={featured.ctaLink || '/volunteer'}
                           className="btn-outline sm:w-auto"
                         >
                           {pick(featured.ctaLabel, featured.ctaLabelHi) ||
@@ -342,7 +342,7 @@ export default function EventsPage() {
               </p>
             </div>
             <div className="mt-6 flex flex-wrap gap-3 lg:mt-0 lg:shrink-0">
-              <Link to="/get-involved/volunteer" className="btn-primary">
+              <Link to="/volunteer" className="btn-primary">
                 {t('Become a Volunteer', 'स्वयंसेवक बनें')}
               </Link>
               <Link to="/contact" className="btn-secondary">
